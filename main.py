@@ -25,15 +25,15 @@ altura_colataveis = 15
 largura_coletaveis = 15
 
 # item coletavel 1:
-cx1 = randint(0, 500)
+cx1 = randint(0, 1100)
 cy1 = randint(0, 500)
 
 # item coletavel 2:
-cx2 = randint(0, 500)
+cx2 = randint(0, 1100)
 cy2 = randint(0, 500)
 
 # item coletavel 3:
-cx3 = randint(0, 500)
+cx3 = randint(0, 1100)
 cy3 = randint(0, 500)
 
 # dimensionando o objeto
@@ -103,19 +103,19 @@ while run:
 
     # se tiver coletado o coletavel 1:
     if coletou1:
-        coletavel1.x = randint(0, 500)
+        coletavel1.x = randint(0, 1100)
         coletavel1.y = randint(0, 500)
         pontuacao1 += 1
 
     # se tiver coletado o coletavel 2:
     if coletou2:
-        coletavel2.x = randint(0, 500)
+        coletavel2.x = randint(0, 1100)
         coletavel2.y = randint(0, 500)
         pontuacao2 += 1
 
     # se tiver coletado o coletavel 3:
     if coletou3:
-        coletavel3.x = randint(0, 500)
+        coletavel3.x = randint(0, 1100)
         coletavel3.y = randint(0, 500)
         pontuacao3 += 1
 
