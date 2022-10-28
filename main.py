@@ -111,13 +111,13 @@ while run:
     fonte = pygame.font.Font('freesansbold.ttf', 32)
 
     # criando a escrita:
-    texto = fonte.render("pontuacao: " + str(pontuacao),
-                         True, (255, 255, 255), (0, 0, 0))
+    texto = fonte.render("Pontuação: " + str(pontuacao),
+                         True, (0, 0, 0))
 
     # criando a superficie:
     superficie_escrever = texto.get_rect()
 
-    superficie_escrever.center = (250, 20)
+    superficie_escrever.center = (350, 20)
     win.blit(texto, superficie_escrever)
 
     # desenhando o objeto que se move e o coletavel
