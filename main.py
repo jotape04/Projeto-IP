@@ -38,7 +38,7 @@ cy = randint(0, 500)
 hc = 10
 wc = 10
 
-# dimensions of the object
+# dimensionando o objeto
 width = 20
 height = 20
 
@@ -57,6 +57,7 @@ coletavel = pygame.Rect(cx, cy, wc, hc)
 while run:
     # aplica o background
     win.blit(bg_img, (0, 0))
+
     # cria delay de 10s
     pygame.time.delay(10)
 
