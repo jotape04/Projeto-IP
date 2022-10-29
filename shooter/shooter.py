@@ -34,4 +34,7 @@ class Bullets(pygame.sprite.Sprite):
 
         if self.rect.x > 1050:
             self.kill()
-        
+    
+    def location(self):
+        return (self.rect.x, self.rect.y)
+    
