@@ -1,5 +1,7 @@
 from random import randint
+from shooter import Shooter
 import pygame
+import time
 
 pygame.init()
 
@@ -55,6 +57,16 @@ coletavel2 = pygame.Rect(cx2, cy2, largura_coletaveis, altura_colataveis)
 
 coletavel3 = pygame.Rect(cx3, cy3, largura_coletaveis, altura_colataveis)
 
+#coloca o atirador em campo
+shoot = Shooter()
+shooter = pygame.sprite.Group()
+shooter.add(shoot)
+
+#coloca as balas
+bullets = pygame.sprite.Group()
+
+#começa o timer para as balas
+now = time.time()
 # loop do game
 while run:
     # aplica o background
@@ -73,6 +85,18 @@ while run:
             run = False
 
     keys = pygame.key.get_pressed()
+
+    #atirador voltando a posição base
+    if 1.1 > time.time() - now > 0.9:
+        shoot.wait()
+    #se preparando pra atirar
+    if 1.8 > time.time() - now > 1.6:
+        shoot.prepare()
+    #atirando a bala
+    if 2.1 > time.time() - now > 1.9:
+        now = time.time()
+        bullets.add(shoot.createb())
+    
 
     # se a seta para esquerda for pressionada
     if keys[pygame.K_LEFT] and objeto.x > 0:
@@ -145,6 +169,11 @@ while run:
     escrever3.center = (850, 20)
     win.blit(texto3, escrever3)
 
+    #desenhando o atirador
+    shooter.draw(win)
+    bullets.draw(win)
+    #movimentação das balas
+    bullets.update(width)
     # desenhando o objeto que se move e o coletavel1
     pygame.draw.rect(win, (255, 255, 255), coletavel1)
     pygame.draw.rect(win, (255, 192, 203), coletavel2)
