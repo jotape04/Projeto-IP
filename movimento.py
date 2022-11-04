@@ -1,6 +1,5 @@
 import pygame 
-from cactos import Cacto1, Cacto3
-from cactos import Cacto2
+from cactos import Cacto1, Cacto2, Cacto3
 from shooter import Shooter
 from pygame.locals import *
 
