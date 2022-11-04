@@ -30,13 +30,16 @@ def distancia_cacto_personagem(cacto, personagem):
     distancia =  ((cacto.rect.y - personagem.rect.y)**2 + (cacto.rect.x - personagem.rect.x)**2)**(1/2)
     return distancia
 
-
-#Loop do jogo
+#Variáveis booleanas que indicam quando foi a primeira vez que o personagem atingiu a distância
+mínima pra cada um dos cactos se movimentar
 primeira_interacao1 = True
 primeira_interacao2 = True
 primeira_interacao3 = True
+
+#Regula o número de frames
 relogio = pygame.time.Clock()
 
+#Loop do jogo
 while True :
     relogio.tick(30)
     for event in pygame.event.get():
@@ -60,6 +63,7 @@ while True :
             
             if event.key == K_DOWN:
                 shooter.rect.y += 5
+                
     #Criando o movimento com teclas PRESSIONADAS
     if pygame.key.get_pressed()[K_UP]:
         shooter.rect.y -= 5
@@ -72,7 +76,10 @@ while True :
 
     if pygame.key.get_pressed()[K_RIGHT]:
         shooter.rect.x += 5
-
+       
+       
+    # A distância entre o atirador e cada cacto só é calculada até ele atingir a distância mínima
+    para o movimento do cacto
     if primeira_interacao1:
         distancia1 = distancia_cacto_personagem(cacto1, shooter)
 
@@ -85,26 +92,27 @@ while True :
     #Analisa a primeira vez que o atirador se aproxima do CACTO 1
     if distancia1 <= 70 and primeira_interacao1:
 
-        #Impede o progama de executar linhas de código desnecessárias
+        #Impede o progama de calcular a distância a cada loop do jogo
         primeira_interacao1 = False
 
         #Salva as coordenadas y do cacto e do atirador na primeira vez que eles atingiram a distância mínima pro movimento
         y_shooter = shooter.rect.y
         y_cacto1 = cacto1.rect.y
-
+        
+        #56 é a altura do cacto 
         if cacto1.rect.y > -56:
-            print(cacto1.rect.y)
             cacto1.rect.y -= 2
-
+    
     if not primeira_interacao1:
-
+        
+        #56 é a altura do cacto 
         if cacto1.rect.y > -56:
              cacto1.rect.y -= 2
     
     #Analisa a primeira vez que o personagem se aproxima do CACTO 2
     if distancia2 <= 85 and primeira_interacao2:
 
-        #Impede o progama de executar linhas de código desnecessárias
+        #Impede o progama de calcular a distância a cada loop do jogo
         primeira_interacao2 = False
 
         #Salva as coordenadas y do cacto e do atirador na primeira vez que eles atingiram a distância mínima pro movimento
@@ -112,7 +120,6 @@ while True :
         y_cacto2 = cacto2.rect.y
 
         if cacto2.rect.y < 600:
-            print(cacto2.rect.y)
             cacto2.rect.y += 2
 
     if not primeira_interacao2:
@@ -123,7 +130,7 @@ while True :
     #Analisa a primeira vez que o personagem se aproxima do CACTO 3
     if distancia3 <= 85 and primeira_interacao3 :
 
-        #Impede o progama de executar linhas de código desnecessárias
+       #Impede o progama de calcular a distância a cada loop do jogo
         primeira_interacao3 = False
 
         #Salva as coordenadas y do cacto e do atirador na primeira vez que eles atingiram a distância mínima pro movimento
@@ -131,7 +138,6 @@ while True :
         y_cacto3 = cacto3.rect.y
 
         if cacto3.rect.y < 600:
-            print(cacto3.rect.y)
             cacto3.rect.y += 1
 
     if not primeira_interacao3 :
