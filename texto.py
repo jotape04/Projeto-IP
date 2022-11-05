@@ -10,11 +10,11 @@ class Texto():
         self.p3 = 0
 
         # criando a escrita:
-        self.texto1 = self.fonte.render("Branco: " + str(0),
+        self.texto1 = self.fonte.render("Pexeira: " + str(0),
                           True, (0, 0, 0))
-        self.texto2 = self.fonte.render("Rosa: " + str(0),
+        self.texto2 = self.fonte.render("Calango: " + str(0),
                           True, (0, 0, 0))
-        self.texto3 = self.fonte.render("Marrom: " + str(0),
+        self.texto3 = self.fonte.render("Agua: " + str(0),
                           True, (0, 0, 0))
 
         # criando a superficie:
@@ -28,15 +28,15 @@ class Texto():
 
     def up1(self):
         self.p1 += 1
-        self.texto1 = self.fonte.render("Branco: " + str(self.p1),
+        self.texto1 = self.fonte.render("Pexeira: " + str(self.p1),
                           True, (0, 0, 0))
         
     def up2(self):
         self.p2 += 1
-        self.texto2 = self.fonte.render("Rosa: " + str(self.p2),
+        self.texto2 = self.fonte.render("Calango: " + str(self.p2),
                           True, (0, 0, 0))
         
     def up3(self):
          self.p3 += 1
-         self.texto3 = self.fonte.render("Marrom: " + str(self.p3),
+         self.texto3 = self.fonte.render("Agua: " + str(self.p3),
                           True, (0, 0, 0))
