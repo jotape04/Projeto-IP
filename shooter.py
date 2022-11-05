@@ -5,7 +5,7 @@ class Shooter(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load("sprites/enemy/cangaciro2.png")
         #self.image.fill((255, 255, 255))
-        self.rect = self.image.get_rect(center = (490, 520))
+        self.rect = self.image.get_rect(center = (470, 535))
 
 
     def createb(self):
@@ -21,7 +21,7 @@ class Bullets(pygame.sprite.Sprite):
     def __init__(self, px, py):
         super().__init__()
         self.image = pygame.image.load("sprites/enemy/bullet.png")
-        self.rect = self.image.get_rect(center = (px + 40, py + 18))
+        self.rect = self.image.get_rect(center = (507, 508))
 
     def update(self, xx):
         self.rect.x += 15
