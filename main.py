@@ -101,6 +101,7 @@ while run:
     
     #retornando o Alagoano até a posição base
     if pulo == 0:
+        pulo = alagoano.down()
         if time.time() - tbase > 0.2:
             alagoano.base()
     else:
@@ -109,6 +110,7 @@ while run:
         if time.time() - tpulo < 0.4:
             alagoano.up()
         else:
+            alagoano.base()
             pulo = alagoano.down()
             
 
