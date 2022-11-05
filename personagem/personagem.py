@@ -2,6 +2,8 @@ from random import randint
 from tracemalloc import start
 import pygame
 import movimentacao
+from pers import Personagem
+from colet import Coletavel
 
 pygame.init()
 
@@ -21,65 +23,39 @@ pontuacao2 = 5
 pontuacao3 = 3
 
 ganhou = False
-#posicao do objeto
-x = 200
-y = 200
 
 #item coletavel 1:
 hc = 10
 wc = 10
-
-c1x = randint(0, telax - wc)
-c1y = randint(0, telay - hc)
-
-c2x = randint(0, telax - wc)
-c2y = randint(0, telay - hc)
-
-c3x = randint(0, telax - wc)
-c3y = randint(0, telay - hc)
-
-  
-# dimensions of the object 
-width = 20
-height = 20
-  
-# velocidade do bloco
-vel = 3.5
   
 # pygame rodando
 run = True
 
 quitou = False
   
-  
-objeto = pygame.Rect(x, y, width, height)
+objeto = Personagem(20, 3, (255,0,0))
 
-coletavel1 = pygame.Rect(c1x, c1y, wc, hc)
-coletavel2 = pygame.Rect(c2x, c2y, wc, hc)
-coletavel3 = pygame.Rect(c3x, c3y, wc, hc)
+coletavel1 = Coletavel((255,255,255))
+coletavel2 = Coletavel((160,32,240))
+coletavel3 = Coletavel((0,0,255))
 
 #tempo em segundos
 start_time = pygame.time.get_ticks()
 
 # loop infinito 
 while run:
-    # creates time delay of 8ms 
+    # delay de 8ms
     pygame.time.delay(8)
     
     act_time = pygame.time.get_ticks()
     tempo = 20 - ((act_time - start_time) // 1000)
     
-    # iterate over the list of Event objects  
-    # that was returned by pygame.event.get() method.  
     for event in pygame.event.get():
-          
-        # if event object type is QUIT  
-        # then quitting the pygame  
-        # and program both.  
+           
         if event.type == pygame.QUIT:
             
             quitou = True
-            # it will make exit the while loop 
+           
             run = False
     
     if pontuacao1 == 0 and pontuacao2 == 0 and pontuacao3 == 0:
@@ -90,11 +66,11 @@ while run:
         run = False
         
         
-    movimentacao.mov(objeto, vel, 500, 500, width)
+    movimentacao.mov(objeto, 500, 500, objeto.dim)
         
-    coletou1 = objeto.colliderect(coletavel1)
-    coletou2 = objeto.colliderect(coletavel2)
-    coletou3 = objeto.colliderect(coletavel3)
+    coletou1 = objeto.obj.colliderect(coletavel1.obj)
+    coletou2 = objeto.obj.colliderect(coletavel2.obj)
+    coletou3 = objeto.obj.colliderect(coletavel3.obj)
     
     #se tiver coletado:
     gap = 10
@@ -102,33 +78,21 @@ while run:
     if coletou1:
         if pontuacao1 > 0:
             pontuacao1 -= 1
-        else:
-            objeto.x = telax/2
-            objeto.y = telay/2
         
-        coletavel1.x = randint(0, telax - wc)
-        coletavel1.y = randint(0, telax - wc)
+        coletavel1.coletou()
         
     
     if coletou2:
-        coletavel2.x = randint(0, telax - wc)
-        coletavel2.y = randint(0, telay - hc)
-        
         if pontuacao2 > 0:
             pontuacao2 -= 1
-        else:
-            objeto.x = telax/2
-            objeto.y = telay/2
+            
+        coletavel2.coletou()
 
     if coletou3:
         if pontuacao3 > 0:
             pontuacao3 -= 1
-        else:
-            objeto.x = telax/2
-            objeto.y = telay/2
         
-        coletavel3.x = randint(0, telax - wc)
-        coletavel3.y = randint(0, telax - wc)
+        coletavel3.coletou()
         
     
          
@@ -156,13 +120,13 @@ while run:
     win.blit(time_text, pos_time)
       
     # desenhando o objeto que se move e o coletavel
-    pygame.draw.rect(win, (255, 255, 255), coletavel1)
+    coletavel1.draw(win)
     
-    pygame.draw.rect(win, (160,32,240), coletavel2)
+    coletavel2.draw(win)
     
-    pygame.draw.rect(win, (0,0,255), coletavel3)
+    coletavel3.draw(win)
      
-    pygame.draw.rect(win, (255, 0, 0), objeto)
+    objeto.draw(win)
     
     # fazendo update na janela
     pygame.display.update() 
@@ -171,14 +135,12 @@ run = True
 while run:
     win.fill((0,0,0))   
     for event in pygame.event.get():
-          
-        # if event object type is QUIT  
-        # then quitting the pygame  
-        # and program both.  
+ 
         if event.type == pygame.QUIT:
-              
-            # it will make exit the while loop 
+               
             run = False
+            
+            
     if ganhou:
         mensagem = "Parabéns, você conseguiu!"
     elif quitou:

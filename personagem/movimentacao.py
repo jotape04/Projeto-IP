@@ -1,28 +1,26 @@
 import pygame
+from pers import Personagem
 
-def mov(objeto, vel, telax, telay, dim):
-    # stores keys pressed 
+def mov(objeto, telax, telay, dim):
+    # eventos de setas pressionadas 
         keys = pygame.key.get_pressed()
         
-        # if left arrow key is pressed
-        if keys[pygame.K_LEFT] and objeto.x>0:
+        # seta esquerda
+        if keys[pygame.K_LEFT] and objeto.obj.x>0:
             
-            # decrement in x co-ordinate
-            objeto.x -= vel
+            objeto.left_arrow()
+        
+        # seta direita
+        if keys[pygame.K_RIGHT] and objeto.obj.x<telax-dim:
             
-        # if left arrow key is pressed
-        if keys[pygame.K_RIGHT] and objeto.x<telax-dim:
+            objeto.right_arrow()
             
-            # increment in x co-ordinate
-            objeto.x += vel
+        # seta para cima  
+        if keys[pygame.K_UP] and objeto.obj.y>0:
             
-        # if left arrow key is pressed   
-        if keys[pygame.K_UP] and objeto.y>0:
+            objeto.up_arrow()
             
-            # decrement in y co-ordinate
-            objeto.y -= vel
+        # seta para baixo   
+        if keys[pygame.K_DOWN] and objeto.obj.y<telay-dim:
             
-        # if left arrow key is pressed   
-        if keys[pygame.K_DOWN] and objeto.y<telay-dim:
-            # increment in y co-ordinate
-            objeto.y += vel
+            objeto.down_arrow()
