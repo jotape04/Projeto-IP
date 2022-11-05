@@ -1,5 +1,5 @@
 import pygame 
-from cactos import Cacto1, Cacto2, Cacto3
+from cactos import Cacto, Cacto_invertido
 from shooter import Shooter
 from pygame.locals import *
 
@@ -13,9 +13,9 @@ background = pygame.image.load('sprites/mapateste2.png')
 background = pygame.transform.scale(background,(largura, altura))
 
 #Colocando os objetos em um grupo
-cacto1 = Cacto1()
-cacto2 = Cacto2()
-cacto3 = Cacto3()
+cacto1 = Cacto((27, 50.4), 194, 565 )
+cacto2 = Cacto_invertido(586, 364)
+cacto3 = Cacto_invertido(843, 362)
 shooter = Shooter()
 
 grupo_cactos = pygame.sprite.Group()
@@ -29,6 +29,13 @@ grupo_shooter.add(shooter)
 def distancia_cacto_personagem(cacto, personagem):
     distancia =  ((cacto.rect.y - personagem.rect.y)**2 + (cacto.rect.x - personagem.rect.x)**2)**(1/2)
     return distancia
+
+#Definindo função pro movimento dos cactos
+def movimento_pra_cima(cacto):
+    cacto.rect.y -= 2
+
+def movimento_pra_baixo(cacto):
+    cacto.rect.y += 2
 
 #Variáveis booleanas que indicam quando foi a primeira vez que o personagem atingiu a distância
 mínima pra cada um dos cactos se movimentar
@@ -101,13 +108,14 @@ while True :
         
         #56 é a altura do cacto 
         if cacto1.rect.y > -56:
-            cacto1.rect.y -= 2
+            movimento_pra_cima(cacto1)
     
     if not primeira_interacao1:
         
         #56 é a altura do cacto 
         if cacto1.rect.y > -56:
-             cacto1.rect.y -= 2
+            movimento_pra_cima(cacto1)
+    
     
     #Analisa a primeira vez que o personagem se aproxima do CACTO 2
     if distancia2 <= 85 and primeira_interacao2:
@@ -119,13 +127,13 @@ while True :
         y_shooter = shooter.rect.y
         y_cacto2 = cacto2.rect.y
 
-        if cacto2.rect.y < 600:
-            cacto2.rect.y += 2
+       if cacto2.rect.y < 600:
+            movimento_pra_baixo(cacto2)
 
     if not primeira_interacao2:
 
         if cacto2.rect.y < 600:
-            cacto2.rect.y += 2
+            movimento_pra_baixo(cacto2)
 
     #Analisa a primeira vez que o personagem se aproxima do CACTO 3
     if distancia3 <= 85 and primeira_interacao3 :
@@ -138,12 +146,12 @@ while True :
         y_cacto3 = cacto3.rect.y
 
         if cacto3.rect.y < 600:
-            cacto3.rect.y += 1
-
+            movimento_pra_baixo(cacto3)
+            
     if not primeira_interacao3 :
 
         if cacto3.rect.y < 600:
-            cacto3.rect.y += 2
+           movimento_pra_baixo(cacto3)
 
     grupo_shooter.draw(tela)
     grupo_cactos.draw(tela)
