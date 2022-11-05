@@ -4,6 +4,7 @@ from texto import Texto
 import pygame
 import time
 from character import Alagoano
+from pygame import mixer
 
 pygame.init()
 
@@ -19,6 +20,10 @@ pygame.display.set_caption("Alagoaninho Adventures")
 
 
 def jogo():
+    mixer.init()
+    musica = mixer.music.load("./music/gameost.mp3")
+    mixer.music.set_volume(0.6)
+    mixer.music.play(-1)
 
     texto = Texto()
 
