@@ -1,4 +1,3 @@
-from re import A
 import pygame
 
 
@@ -25,7 +24,7 @@ class Alagoano(pygame.sprite.Sprite):
 
     def right(self):
         self.direction = 0
-        if self.rect.x < 1120:
+        if (self.rect.x < 1120):
             self.rect.x += VEL
 
         if self.walk < ATT and self.jumpi == 0:
@@ -39,7 +38,7 @@ class Alagoano(pygame.sprite.Sprite):
     
     def left(self):
         self.direction = 1
-        if self.rect.x > 20:
+        if (self.rect.x > 20):
             self.rect.x -= VEL
 
         if self.walk < ATT and self.jumpi == 0:
@@ -52,9 +51,12 @@ class Alagoano(pygame.sprite.Sprite):
             self.walk = 0
         
     def down(self):
-        self.base()
-        if self.rect.y < 504:
-            self.rect.y += VEL * 1.6
+        if(869>self.rect.x >317 and 294 > self.rect.y > 288):
+            self.jumpi = 0
+            self.lock = 0
+            return 0
+        elif self.rect.y < 504:
+            self.rect.y += VEL * 1.75
             return 1
         else:
             self.jumpi = 0
@@ -64,8 +66,10 @@ class Alagoano(pygame.sprite.Sprite):
     def up(self):
         self.lock = 1
         self.jumpi = 1
-        if self.rect.y > -5:
-            self.rect.y -= VEL* 1.35
+        if 530 > self.rect.x > 368 and 360> self.rect.y:
+            pass
+        elif self.rect.y > -5:
+            self.rect.y -= VEL* 1.38
 
         if self.direction == 0:
             self.image = pygame.image.load("sprites/alagoaninho/alagoaninho-pulando(IN).png")
