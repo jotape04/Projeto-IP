@@ -18,6 +18,7 @@ bg_img = pygame.transform.scale(bg_img, (width, height))
 
 pygame.display.set_caption("Alagoaninho Adventures")
 
+
 def jogo():
     mixer.init()
     musica = mixer.music.load("./music/gameost.mp3")
@@ -29,24 +30,23 @@ def jogo():
     # pygame rodando
     run = True
 
-    #pulo
+    # pulo
     pulo = 0
 
-    #coloca o atirador em campo
+    # coloca o atirador em campo
     shoot = Shooter()
     shooter = pygame.sprite.Group()
     shooter.add(shoot)
 
-    #alagonao
+    # alagonao
     alagoano = Alagoano()
     player = pygame.sprite.Group()
     player.add(alagoano)
 
-    #coloca as balas
+    # coloca as balas
     bullets = pygame.sprite.Group()
 
-
-    #começa o timer para as balas
+    # começa o timer para as balas
     now = time.time()
     tbase = time.time()
     tpulo = time.time()
@@ -67,22 +67,18 @@ def jogo():
                 # saindo do loop
                 return False
 
-            if event.type == pygame.MOUSEBUTTONUP:
-                print(pygame.mouse.get_pos())
-
         keys = pygame.key.get_pressed()
 
-        #atirador voltando a posição base
+        # atirador voltando a posição base
         if 1.1 > time.time() - now > 0.9:
             shoot.wait()
-        #se preparando pra atirar
+        # se preparando pra atirar
         if 1.8 > time.time() - now > 1.6:
             shoot.prepare()
-        #atirando a bala
+        # atirando a bala
         if 2.1 > time.time() - now > 1.9:
             now = time.time()
             bullets.add(shoot.createb())
-    
 
         # se a seta para esquerda for pressionada
         if keys[pygame.K_LEFT]:
@@ -104,29 +100,28 @@ def jogo():
             tpulo = time.time()
             pulo = 1
 
-    
-        #retornando o Alagoano até a posição base
-        if pulo == 0:
+        # retornando o Alagoano até a posição base
+        if pulo == 1:
+            alagoano.updatejump()
+
+            if time.time() - tpulo > 0.43:
+                pulo = alagoano.down()
+                alagoano.base()
+            else:
+                alagoano.up()
+        else:
             pulo = alagoano.down()
             if time.time() - tbase > 0.2:
                 alagoano.base()
-        else:
-            alagoano.updatejump()
 
-            if time.time() - tpulo < 0.4:
-                alagoano.up()
-            else:
-                alagoano.base()
-                pulo = alagoano.down()
-        
-        #desenhado o alagoan
+        # desenhado o alagoan
         player.draw(win)
 
-        #desenhando o atirador
+        # desenhando o atirador
         bullets.draw(win)
         shooter.draw(win)
 
-        #movimentação das balas
+        # movimentação das balas
         bullets.update(width)
 
         win.blit(texto.texto1, texto.escrever1)
@@ -138,7 +133,6 @@ def jogo():
 
         if keys[pygame.K_DOWN]:
             return jogo()
-    
 
 
 jogar = True
