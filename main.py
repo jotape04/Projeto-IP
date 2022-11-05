@@ -2,6 +2,7 @@ from random import randint
 from shooter import Shooter
 import pygame
 import time
+from character import Alagoano
 
 pygame.init()
 
@@ -19,54 +20,31 @@ pontuacao1 = 0
 pontuacao2 = 0
 pontuacao3 = 0
 
-# posicao do objeto
-x = 1110
-y = 520
-
-altura_colataveis = 15
-largura_coletaveis = 15
-
-# item coletavel 1:
-cx1 = randint(0, 1100)
-cy1 = randint(0, 500)
-
-# item coletavel 2:
-cx2 = randint(0, 1100)
-cy2 = randint(0, 500)
-
-# item coletavel 3:
-cx3 = randint(0, 1100)
-cy3 = randint(0, 500)
-
-# dimensionando o objeto
-width = 20
-height = 20
-
-# velocidade do bloco
-vel = 5
 
 # pygame rodando
 run = True
 
-
-objeto = pygame.Rect(x, y, width, height)
-
-coletavel1 = pygame.Rect(cx1, cy1, largura_coletaveis, altura_colataveis)
-
-coletavel2 = pygame.Rect(cx2, cy2, largura_coletaveis, altura_colataveis)
-
-coletavel3 = pygame.Rect(cx3, cy3, largura_coletaveis, altura_colataveis)
+#pulo
+pulo = 0
 
 #coloca o atirador em campo
 shoot = Shooter()
 shooter = pygame.sprite.Group()
 shooter.add(shoot)
 
+#alagonao
+alagoano = Alagoano()
+player = pygame.sprite.Group()
+player.add(alagoano)
+
 #coloca as balas
 bullets = pygame.sprite.Group()
 
+
 #começa o timer para as balas
 now = time.time()
+tbase = time.time()
+tpulo = time.time()
 # loop do game
 while run:
     # aplica o background
@@ -84,6 +62,8 @@ while run:
             # saindo do loop
             run = False
 
+        if event.type == pygame.MOUSEBUTTONUP:
+            print(pygame.mouse.get_pos())
     keys = pygame.key.get_pressed()
 
     #atirador voltando a posição base
@@ -99,49 +79,52 @@ while run:
     
 
     # se a seta para esquerda for pressionada
-    if keys[pygame.K_LEFT] and objeto.x > 0:
-
+    if keys[pygame.K_LEFT]:
+        tbase = time.time()
         # diminuindo no eixo x
-        objeto.x -= vel
+        alagoano.left()
 
     # se a seta para a direita for pressionada
-    if keys[pygame.K_RIGHT] and objeto.x < 1200-width:
-
+    if keys[pygame.K_RIGHT]:
+        tbase = time.time()
         # incrementando no eixo x
-        objeto.x += vel
+        alagoano.right()
 
     # se a seta para cima for pressionada
-    if keys[pygame.K_UP] and objeto.y > 0:
+    if keys[pygame.K_UP] and alagoano.lock == 0:
 
         # diminuindo no eixo y
-        objeto.y -= vel
+        alagoano.up()
+        tpulo = time.time()
+        pulo = 1
 
-    # se a seta para baixo for pressionada
-    if keys[pygame.K_DOWN] and objeto.y < 600-height:
-        # incrementando no eixo y
-        objeto.y += vel
+    
+    #retornando o Alagoano até a posição base
+    if pulo == 0:
+        if time.time() - tbase > 0.2:
+            alagoano.base()
+    else:
+        alagoano.updatejump()
 
-    coletou1 = objeto.colliderect(coletavel1)
-    coletou2 = objeto.colliderect(coletavel2)
-    coletou3 = objeto.colliderect(coletavel3)
+        if time.time() - tpulo < 0.4:
+            alagoano.up()
+        else:
+            pulo = alagoano.down()
+            
 
-    # se tiver coletado o coletavel 1:
-    if coletou1:
-        coletavel1.x = randint(0, 1100)
-        coletavel1.y = randint(0, 500)
-        pontuacao1 += 1
+        
 
-    # se tiver coletado o coletavel 2:
-    if coletou2:
-        coletavel2.x = randint(0, 1100)
-        coletavel2.y = randint(0, 500)
-        pontuacao2 += 1
+    #desenhado o alagoan
+    player.draw(win)
 
-    # se tiver coletado o coletavel 3:
-    if coletou3:
-        coletavel3.x = randint(0, 1100)
-        coletavel3.y = randint(0, 500)
-        pontuacao3 += 1
+    #desenhando o atirador
+    bullets.draw(win)
+    shooter.draw(win)
+
+    #movimentação das balas
+    bullets.update(width)
+    # fazendo update na janela
+    pygame.display.update()
 
     # escrevendo na tela:
     # puxando fontes:
@@ -168,18 +151,3 @@ while run:
 
     escrever3.center = (850, 20)
     win.blit(texto3, escrever3)
-
-    #desenhando o atirador
-    shooter.draw(win)
-    bullets.draw(win)
-    #movimentação das balas
-    bullets.update(width)
-    # desenhando o objeto que se move e o coletavel1
-    pygame.draw.rect(win, (255, 255, 255), coletavel1)
-    pygame.draw.rect(win, (255, 192, 203), coletavel2)
-    pygame.draw.rect(win, (139, 69, 19), coletavel3)
-
-    pygame.draw.rect(win, (255, 0, 0), objeto)
-
-    # fazendo update na janela
-    pygame.display.update()
