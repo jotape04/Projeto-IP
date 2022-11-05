@@ -15,7 +15,7 @@ class Texto():
                                         True, (0, 0, 0))
         self.texto2 = self.fonte.render("Calango: " + str(0),
                                         True, (0, 0, 0))
-        self.texto3 = self.fonte.render("Agua: " + str(0),
+        self.texto3 = self.fonte.render("Água: " + str(0),
                                         True, (0, 0, 0))
 
         # criando a superficie:
@@ -39,5 +39,5 @@ class Texto():
 
     def up3(self):
         self.p3 += 1
-        self.texto3 = self.fonte.render("Agua: " + str(self.p3),
+        self.texto3 = self.fonte.render("Água: " + str(self.p3),
                                         True, (0, 0, 0))
