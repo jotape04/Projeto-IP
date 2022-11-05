@@ -19,10 +19,7 @@ pygame.display.set_caption("Alagoaninho Adventures")
 
 def jogo():
 
-    pontuacao1 = 0
-    pontuacao2 = 0
-    pontuacao3 = 0
-    texto = Texto(pontuacao1, pontuacao2, pontuacao3)
+    texto = Texto()
 
     # pygame rodando
     run = True
