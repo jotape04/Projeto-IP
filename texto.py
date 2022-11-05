@@ -2,16 +2,19 @@ import pygame
 
 class Texto():
 # escrevendo na tela:
-    def __init__(self, p1, p2, p3):
+    def __init__(self):
 
         self.fonte = pygame.font.Font('freesansbold.ttf', 25)
+        self.p1 = 0
+        self.p2 = 0
+        self.p3 = 0
 
-    # criando a escrita:
-        self.texto1 = self.fonte.render("Branco: " + str(p1),
+        # criando a escrita:
+        self.texto1 = self.fonte.render("Branco: " + str(0),
                           True, (0, 0, 0))
-        self.texto2 = self.fonte.render("Rosa: " + str(p2),
+        self.texto2 = self.fonte.render("Rosa: " + str(0),
                           True, (0, 0, 0))
-        self.texto3 = self.fonte.render("Marrom: " + str(p3),
+        self.texto3 = self.fonte.render("Marrom: " + str(0),
                           True, (0, 0, 0))
 
         # criando a superficie:
@@ -23,4 +26,17 @@ class Texto():
         self.escrever2.center = (600, 20)
         self.escrever3.center = (850, 20)
 
-    
+    def up1(self):
+        self.p1 += 1
+        self.texto1 = self.fonte.render("Branco: " + str(self.p1),
+                          True, (0, 0, 0))
+        
+    def up2(self):
+        self.p2 += 1
+        self.texto2 = self.fonte.render("Rosa: " + str(self.p2),
+                          True, (0, 0, 0))
+        
+    def up3(self):
+         self.p3 += 1
+         self.texto3 = self.fonte.render("Marrom: " + str(self.p3),
+                          True, (0, 0, 0))
