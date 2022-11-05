@@ -14,12 +14,17 @@ background = pygame.transform.scale(background,(largura, altura))
 
 #Colocando os objetos em um grupo
 cacto1 = Cacto((27, 50.4), 194, 565 )
-cacto2 = Cacto_invertido(586, 364)
-cacto3 = Cacto_invertido(843, 362)
+cacto2 = Cacto_invertido(586, 372)
+cacto3 = Cacto_invertido(843, 372)
+cacto4 = Cacto_invertido(880, 378)
+cacto5 = Cacto_invertido(546, 378)
+minicacto1 = Cacto((27*0.2, 50.4*0.2),79, 335)
+minicacto2 = Cacto((27*0.2, 50.4*0.2),739,173)
+
 shooter = Shooter()
 
 grupo_cactos = pygame.sprite.Group()
-grupo_cactos.add(cacto1, cacto2, cacto3)
+grupo_cactos.add(cacto1, cacto2, cacto3, cacto4, cacto5, minicacto1, minicacto2)
 
 grupo_shooter = pygame.sprite.Group()
 grupo_shooter.add(shooter)
