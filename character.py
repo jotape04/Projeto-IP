@@ -106,6 +106,10 @@ class Alagoano(pygame.sprite.Sprite):
             self.jumpi = 0
             self.lock = 0
             return 0
+        elif 755 > self.rect.x > 675 and 130 < self.rect.y < 140:
+            self.jumpi = 0
+            self.lock = 0
+            return 0
         elif self.rect.y < 504:
             self.rect.y += VEL * 1.75
             return 1
