@@ -1,5 +1,6 @@
 from random import randint
 from shooter import Shooter
+from texto import Texto
 import pygame
 import time
 from character import Alagoano
@@ -21,7 +22,7 @@ def jogo():
     pontuacao1 = 0
     pontuacao2 = 0
     pontuacao3 = 0
-
+    texto = Texto(pontuacao1, pontuacao2, pontuacao3)
 
     # pygame rodando
     run = True
@@ -125,6 +126,11 @@ def jogo():
 
         #movimentação das balas
         bullets.update(width)
+
+        win.blit(texto.texto1, texto.escrever1)
+        win.blit(texto.texto2, texto.escrever2)
+        win.blit(texto.texto3, texto.escrever3)
+
         # fazendo update na janela
         pygame.display.update()
 
