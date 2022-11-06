@@ -191,7 +191,14 @@ def jogo():
             pulo = alagoano.down()
             if time.time() - tbase > 0.2:
                 alagoano.base()
-
+                
+        if pygame.sprite.spritecollide(alagoano, _peixeira, True):
+            texto.up1
+        elif pygame.sprite.spritecollide(alagoano, _calango, True):
+            texto.up2
+        elif pygame.sprite.spritecollide(alagoano, _agua, True):
+            texto.up3
+            
         # desenhado o alagoan
         player.draw(win)
 
