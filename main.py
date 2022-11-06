@@ -5,6 +5,7 @@ import pygame
 import time
 from character import Alagoano
 from pygame import mixer
+from coletaveis import *
 
 pygame.init()
 
@@ -60,6 +61,19 @@ def jogo():
 
     # pulo
     pulo = 0
+    
+    #criando coletaveis
+    agua = Agua()
+    _agua = pygame.sprite.Group()
+    _agua.add(agua)
+    
+    peixeira = Peixeira()
+    _peixeira = pygame.sprite.Group()
+    _peixeira.add(peixeira)
+    
+    calango = Calango()
+    _calango = pygame.sprite.Group()
+    _calango.add(calango)
 
     # coloca o atirador em campo
     shoot = Shooter()
@@ -142,7 +156,21 @@ def jogo():
             pulo = alagoano.down()
             if time.time() - tbase > 0.2:
                 alagoano.base()
-
+    
+            
+        #Colocando a lista de colisões
+        if pygame.sprite.spritecollide(alagoano, _peixeira, True):
+            texto.up1()
+        elif pygame.sprite.spritecollide(alagoano, _calango, True):
+            texto.up2()
+        elif pygame.sprite.spritecollide(alagoano, _agua, True):
+            texto.up3()
+        
+        #desenhando coletaveis
+        _agua.draw(win)
+        _peixeira.draw(win)
+        _calango.draw(win)
+        
         # desenhado o alagoan
         player.draw(win)
 
@@ -152,7 +180,7 @@ def jogo():
 
         # movimentação das balas
         bullets.update(width)
-
+        
         win.blit(texto.texto1, texto.escrever1)
         win.blit(texto.texto2, texto.escrever2)
         win.blit(texto.texto3, texto.escrever3)
