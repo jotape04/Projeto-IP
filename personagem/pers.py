@@ -32,5 +32,3 @@ class Personagem():
         return
         
 objeto = Personagem(5,5,(0,0,0))
-
-print(objeto.__dict__)
