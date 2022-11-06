@@ -2,7 +2,7 @@ import pygame
 from cactos import Cacto, Cacto_invertido
 from alagoano import Alagoano
 from pygame.locals import *
-
+from shooter import Shooter, Bullets
 
 pygame.init()
 
@@ -21,24 +21,22 @@ cacto4 = Cacto_invertido(880, 378)
 cacto5 = Cacto_invertido(546, 378)
 minicacto1 = Cacto((27*0.2, 50.4*0.2),79, 335)
 minicacto2 = Cacto((27*0.2, 50.4*0.2),739,173)
-
-alagoano = Alagoano()
-
 grupo_cactos = pygame.sprite.Group()
 grupo_cactos.add(cacto1, cacto2, cacto3, cacto4, cacto5, minicacto1, minicacto2)
 
+
+shooter = Shooter()
+bullets = Bullets(430, 530)
 grupo_shooter = pygame.sprite.Group()
-grupo_shooter.add(alagoano)
+grupo_shooter.add(shooter, bullets)
+
+
+alagoano = Alagoano()
+grupo_alagoano = pygame.sprite.Group()
+grupo_alagoano.add(alagoano)
 
 #Regula os frames
 relogio = pygame.time.Clock()
-
-#Função Game Over
-def _mensagem_(msg, tamanho, cor):
-    fonte = pygame.font.SysFont('comicsansms', tamanho, True, False)
-    mensagem = f'{msg}'
-    texto_formatado = fonte.render(mensagem, True, cor)
-    return texto_formatado
 
 #Loop do jogo
 while True :
@@ -54,16 +52,16 @@ while True :
         if event.type == KEYDOWN:
 
             if event.key == K_UP:
-                alagoano.rect.y -= 20
+                alagoano.rect.y -= 5
 
             if event.key == K_LEFT:
-                alagoano.rect.x -= 20
+                alagoano.rect.x -= 5
 
             if event.key == K_RIGHT:
-                alagoano.rect.x += 20
+                alagoano.rect.x += 5
             
             if event.key == K_DOWN:
-               alagoano.rect.y += 20
+               alagoano.rect.y += 5
 
     if pygame.key.get_pressed()[K_UP]:
         alagoano.rect.y -= 5
@@ -78,11 +76,13 @@ while True :
         alagoano.rect.x += 5
        
     #Colocando a lista de colisões
-    colisoes = pygame.sprite.spritecollide(alagoano, grupo_cactos, True)
-    grupo_shooter.draw(tela)
+    colisoes1 = pygame.sprite.spritecollide(alagoano, grupo_cactos, True)
+
+    colisoes2 = pygame.sprite.spritecollide(alagoano, grupo_shooter, True)
+
+    grupo_alagoano.draw(tela)
     grupo_cactos.draw(tela)
-
-
+    grupo_shooter.draw(tela)
 
     pygame.display.flip() 
     tela.blit(background,(0,0))
