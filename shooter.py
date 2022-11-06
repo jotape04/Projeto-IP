@@ -9,7 +9,7 @@ class Shooter(pygame.sprite.Sprite):
 
 
     def createb(self):
-        return Bullets(self.rect.x, self.rect.y)
+        return Bullets()
     
     def prepare(self):
         self.image = pygame.image.load("sprites/enemy/cangaciro1.png")
@@ -18,7 +18,7 @@ class Shooter(pygame.sprite.Sprite):
         self.image = pygame.image.load("sprites/enemy/cangaciro2.png")
 
 class Bullets(pygame.sprite.Sprite):
-    def __init__(self,px,py):
+    def __init__(self):
         super().__init__()
         self.image = pygame.image.load("sprites/enemy/bullet.png")
         self.rect = self.image.get_rect(center = (507, 508))
