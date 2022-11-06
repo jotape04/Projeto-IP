@@ -19,6 +19,9 @@ bg_img = pygame.transform.scale(bg_img, (width, height))
 pygame.display.set_caption("Alagoaninho Adventures")
 
 def victory():
+    mixer.music.load("./music/vic.mp3")
+    mixer.music.play()
+    
     ganho = Vic()
     vitoria = pygame.sprite.Group()
     vitoria.add(ganho)
@@ -32,7 +35,7 @@ def victory():
 def gameover():
 
     mixer.music.load("./music/over.mp3")
-    mixer.music.play(-1)
+    mixer.music.play()
 
     death = Death()
     morte = pygame.sprite.Group()
