@@ -3,7 +3,7 @@ from shooter import Shooter
 from texto import *
 import pygame
 import time
-from alagoano import Alagoano
+from character import Alagoano
 from pygame import mixer
 from cactos import Cacto, Cacto_invertido
 
