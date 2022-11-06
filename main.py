@@ -1,6 +1,6 @@
 from random import randint
 from shooter import Shooter
-from texto import Texto
+from texto import Texto, Death
 import pygame
 import time
 from character import Alagoano
@@ -19,10 +19,25 @@ bg_img = pygame.transform.scale(bg_img, (width, height))
 pygame.display.set_caption("Alagoaninho Adventures")
 
 
+def gameover():
+    key = pygame.key.get_pressed()
+    mixer.music.load("./music/over.mp3")
+    mixer.music.play(-1)
+
+    death = Death()
+    morte = pygame.sprite.Group()
+    morte.add(death)
+
+    morte.draw(win)
+    pygame.display.update()
+
+    time.sleep(5)
+    return jogo()
+
 def jogo():
     mixer.init()
     musica = mixer.music.load("./music/gameost.mp3")
-    mixer.music.set_volume(0.6)
+    mixer.music.set_volume(0.4)
     mixer.music.play(-1)
 
     texto = Texto()
@@ -66,6 +81,8 @@ def jogo():
 
                 # saindo do loop
                 return False
+            if event.type == pygame.MOUSEBUTTONUP:
+                print(pygame.mouse.get_pos())
 
         keys = pygame.key.get_pressed()
 
@@ -132,7 +149,7 @@ def jogo():
         pygame.display.update()
 
         if keys[pygame.K_DOWN]:
-            return jogo()
+            gameover()
 
 
 jogar = True
