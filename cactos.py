@@ -10,6 +10,7 @@ class Cacto(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, size)
         #self.image.fill((255, 255, 255))
         self.rect = self.image.get_rect(bottomleft = (cx, cy))
+        self.mask = pygame.mask.from_surface(self.image)
 
 class Cacto_invertido(pygame.sprite.Sprite):
     def __init__(self, cx, cy):
@@ -17,3 +18,6 @@ class Cacto_invertido(pygame.sprite.Sprite):
         self.image = pygame.image.load("sprites/cacto_invertido.png")
         #self.image.fill((255, 255, 255))
         self.rect = self.image.get_rect(center = (cx, cy))
+        self.mask = pygame.mask.from_surface(self.image)
+
+

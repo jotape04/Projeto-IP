@@ -6,10 +6,11 @@ class Shooter(pygame.sprite.Sprite):
         self.image = pygame.image.load("sprites/enemy/cangaciro2.png")
         #self.image.fill((255, 255, 255))
         self.rect = self.image.get_rect(center = (470, 535))
+        self.mask = pygame.mask.from_surface(self.image)
 
 
     def createb(self):
-        return Bullets()
+        return Bullets(self.rect.x, self.rect.y)
     
     def prepare(self):
         self.image = pygame.image.load("sprites/enemy/cangaciro1.png")
@@ -18,10 +19,11 @@ class Shooter(pygame.sprite.Sprite):
         self.image = pygame.image.load("sprites/enemy/cangaciro2.png")
 
 class Bullets(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self,px,py):
         super().__init__()
         self.image = pygame.image.load("sprites/enemy/bullet.png")
         self.rect = self.image.get_rect(center = (507, 508))
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self, xx):
         self.rect.x += 15

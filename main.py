@@ -6,6 +6,7 @@ import time
 from character import Alagoano
 from pygame import mixer
 from coletaveis import *
+from cactos import Cacto, Cacto_invertido
 
 pygame.init()
 
@@ -34,10 +35,9 @@ def victory():
     return False
 
 def gameover():
-
     mixer.music.load("./music/over.mp3")
     mixer.music.play()
-
+    
     death = Death()
     morte = pygame.sprite.Group()
     morte.add(death)
@@ -47,6 +47,19 @@ def gameover():
 
     time.sleep(5)
     return jogo()
+
+
+#Definindo Função que calcula a distância entre o personagem e os cactos que vão se movimentar
+def distancia_cacto_personagem(cacto, personagem):
+    distancia =  ((cacto.rect.y - personagem.rect.y)**2 + (cacto.rect.x - personagem.rect.x)**2)**(1/2)
+    return distancia
+
+#Definindo função pro movimento dos cactos
+def movimento_pra_cima(cacto):
+    cacto.rect.y -= 2
+
+def movimento_pra_baixo(cacto):
+    cacto.rect.y += 2
 
 def jogo():
     mixer.init()
@@ -80,10 +93,21 @@ def jogo():
     shooter = pygame.sprite.Group()
     shooter.add(shoot)
 
-    # alagonao
+    # alagoano
     alagoano = Alagoano()
     player = pygame.sprite.Group()
     player.add(alagoano)
+
+    #coloca os cactos em campo
+    cacto1 = Cacto((27, 50.4), 194, 565 )
+    cacto2 = Cacto_invertido(586, 372)
+    cacto3 = Cacto_invertido(843, 372)
+    cacto4 = Cacto_invertido(880, 378)
+    cacto5 = Cacto_invertido(546, 378)
+    minicacto1 = Cacto((27*0.2, 50.4*0.2),79, 335)
+    minicacto2 = Cacto((27*0.2, 50.4*0.2),739,173)  
+    grupo_cactos = pygame.sprite.Group()
+    grupo_cactos.add(cacto1, cacto2, cacto3, cacto4, cacto5, minicacto1, minicacto2)
 
     # coloca as balas
     bullets = pygame.sprite.Group()
@@ -92,8 +116,19 @@ def jogo():
     now = time.time()
     tbase = time.time()
     tpulo = time.time()
+
+    # regula a interação do alagoano com os cactos que vão se movimentar
+    primeira_interacao1 = True
+    primeira_interacao2 = True
+    primeira_interacao3 = True
+
+    # número de frames
+    relogio = pygame.time.Clock()
+
     # loop do game
     while run:
+
+        relogio.tick(30)
         # aplica o background
         win.blit(bg_img, (0, 0))
 
@@ -156,27 +191,16 @@ def jogo():
             pulo = alagoano.down()
             if time.time() - tbase > 0.2:
                 alagoano.base()
-    
-            
-        #Colocando a lista de colisões
-        if pygame.sprite.spritecollide(alagoano, _peixeira, True):
-            texto.up1()
-        elif pygame.sprite.spritecollide(alagoano, _calango, True):
-            texto.up2()
-        elif pygame.sprite.spritecollide(alagoano, _agua, True):
-            texto.up3()
-        
-        #desenhando coletaveis
-        _agua.draw(win)
-        _peixeira.draw(win)
-        _calango.draw(win)
-        
+
         # desenhado o alagoan
         player.draw(win)
 
         # desenhando o atirador
         bullets.draw(win)
         shooter.draw(win)
+
+        # desenhando os cactos
+        grupo_cactos.draw(win)
 
         # movimentação das balas
         bullets.update(width)
@@ -185,15 +209,13 @@ def jogo():
         win.blit(texto.texto2, texto.escrever2)
         win.blit(texto.texto3, texto.escrever3)
 
-        # fazendo update na janela
-        pygame.display.update()
+        pygame.display.flip()
 
         if keys[pygame.K_DOWN]:
             gameover()
-        
+
         if texto.p1 == texto.p2 == texto.p3 == 1:
             return victory()
-
 
 jogar = True
 while jogar:

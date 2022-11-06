@@ -11,10 +11,13 @@ class Alagoano(pygame.sprite.Sprite):
         self.image = pygame.image.load(
             "sprites/alagoaninho/alagoaninho-parado.png")
         self.rect = self.image.get_rect(center=(1116, 526))
+        self.mask = pygame.mask.from_surface(self.image)
+        self.keys = [pygame.K_LEFT, pygame.K_RIGHT, pygame.K_UP, pygame.K_DOWN]
         self.direction = 1  # 1 é direita 0 é esquerda
         self.walk = 0
         self.jumpi = 0
         self.lock = 0
+
 
     def base(self):
         if self.direction == 0:
@@ -26,11 +29,7 @@ class Alagoano(pygame.sprite.Sprite):
 
     def right(self):
         self.direction = 0
-        if 250 < self.rect.x < 300  and 203 < self.rect.y < 365:
-            pass
-        elif 843 < self.rect.x < 867  and 203 < self.rect.y < 365:
-            pass
-        elif (self.rect.x < 1120):
+        if (self.rect.x < 1120):
             self.rect.x += VEL
 
         if self.walk < ATT and self.jumpi == 0:
@@ -46,11 +45,7 @@ class Alagoano(pygame.sprite.Sprite):
 
     def left(self):
         self.direction = 1
-        if 270 < self.rect.x < 310  and 203 < self.rect.y < 365:
-            pass
-        elif 873 < self.rect.x < 897  and 203 < self.rect.y < 365:
-            pass
-        elif (self.rect.x > 20):
+        if (self.rect.x > 20):
             self.rect.x -= VEL
 
         if self.walk < ATT and self.jumpi == 0:
@@ -105,7 +100,7 @@ class Alagoano(pygame.sprite.Sprite):
             self.jumpi = 0
             self.lock = 0
             return 0
-        elif 890 > self.rect.x > 825 and 160 < self.rect.y < 180:
+        elif 890 > self.rect.x > 845 and 160 < self.rect.y < 170:
             self.jumpi = 0
             self.lock = 0
             return 0
@@ -131,7 +126,7 @@ class Alagoano(pygame.sprite.Sprite):
         if (570 > self.rect.x > 380 and 360 > self.rect.y > 300) or (895 > self.rect.x > 810 and 360 > self.rect.y > 300):
             pass
         elif self.rect.y > -5:
-            self.rect.y -= VEL * 1.26
+            self.rect.y -= VEL * 1.38
 
         if self.direction == 0:
             self.image = pygame.image.load(
