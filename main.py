@@ -1,15 +1,26 @@
-from cactos import Cacto, Cacto_invertido
-from character import Alagoano
-from pygame import mixer
-from coletaveis import *
 from random import randint
 from shooter import Shooter
 from texto import *
 import pygame
 import time
+from alagoano import Alagoano
+from pygame import mixer
+from coletaveis import *
+from cactos import Cacto, Cacto_invertido
 
-width = 1200
+pygame.init()
+
 height = 600
+width = 1200
+
+win = pygame.display.set_mode((width, height))
+
+bg_img = pygame.image.load('./sprites/mapa/mapateste2.png')
+bg_img = pygame.transform.scale(bg_img, (width, height))
+
+pygame.display.set_caption("Alagoaninho Adventures")
+
+
 
 def victory():
     mixer.music.load("./music/vic.mp3")
@@ -20,28 +31,27 @@ def victory():
     vitoria.add(ganho)
 
     vitoria.draw(win)
-    pygame.display.update()
+    pygame.display.flip()
 
     time.sleep(5)
     return False
 
+
+
 def gameover():
+
     #toca a musica de morte
     mixer.music.load("./music/over.mp3")
     mixer.music.play()
     
-    #coloca na tela a mensagem de morte
     death = Death()
     morte = pygame.sprite.Group()
     morte.add(death)
 
     morte.draw(win)
-    pygame.display.update()
-    
-    #espera 5 segundos e reinicia o jogo
-    time.sleep(5)
-    return jogo()
+    pygame.display.flip()
 
+    time.sleep(5)
 
 #Definindo Função que calcula a distância entre o personagem e os cactos que vão se movimentar
 def distancia_cacto_personagem(cacto, personagem):
@@ -53,31 +63,35 @@ def movimento_pra_cima(cacto):
     cacto.rect.y -= 2
 
 def movimento_pra_baixo(cacto):
-    cacto.rect.y += 2
-   
+    cacto.rect.y += 3.5
+
 # colisão do alagoano com as boxes dos cactos
 def colisao_box_cactos(personagem):
        if 0 <= personagem.rect.y <= 149 and 0 <= personagem.rect.x <= 51:
-            return gameover()
+            gameover()
+            
        elif 0 <= personagem.rect.y <= 42 and 57 <= personagem.rect.x <= 178:
-            return gameover()
-
+            gameover()
+            
        elif 382 <= personagem.rect.y <= 600 and 0 <= personagem.rect.x <= 48:
-            return gameover() 
+            gameover() 
+        
 
        elif 477 <= personagem.rect.y <= 600  and 51 <= personagem.rect.x <= 173:
-            return gameover()
+            gameover()
+        
 
        elif 335 <= personagem.rect.y <= 393 and 265 <= personagem.rect.x <= 378:
-            return gameover()
-
+            gameover()
+        
        elif 335 <= personagem.rect.y <= 375 and 593 <= personagem.rect.x <= 819:
-            return gameover()
-    
+            gameover()
+            
        elif 206 <= personagem.rect.y <= 284 and 373 <= personagem.rect.x <= 791:
-            return gameover()
+            gameover()
 
 def jogo():
+
     #comeca a tocar a musica de fundo
     mixer.init()
     musica = mixer.music.load("./music/gameost.mp3")
@@ -91,19 +105,12 @@ def jogo():
 
     # pulo
     pulo = 0
-    
-    #criando coletaveis
-    agua = Agua()
-    _agua = pygame.sprite.Group()
-    _agua.add(agua)
-    
-    peixeira = Peixeira()
-    _peixeira = pygame.sprite.Group()
-    _peixeira.add(peixeira)
-    
-    calango = Calango()
-    _calango = pygame.sprite.Group()
-    _calango.add(calango)
+
+    #Sprites para o caso de vitória
+    ganho = Vic()
+    vitoria = pygame.sprite.Group()
+    vitoria.add(ganho)
+
 
     # coloca o atirador em campo
     shoot = Shooter()
@@ -128,6 +135,19 @@ def jogo():
 
     # coloca as balas
     bullets = pygame.sprite.Group()
+
+    # coloca os coletaveis
+    agua = Agua()
+    _agua =  pygame.sprite.Group()
+    _agua.add(agua)
+
+    calango = Calango()
+    _calango = pygame.sprite.Group()
+    _calango.add(calango)
+
+    peixeira = Peixeira()
+    _peixeira = pygame.sprite.Group()
+    _peixeira.add(peixeira)
 
     # começa o timer para as balas
     now = time.time()
@@ -208,7 +228,7 @@ def jogo():
             pulo = alagoano.down()
             if time.time() - tbase > 0.2:
                 alagoano.base()
-                
+        
         # movimento dos cactos
         if primeira_interacao1:
            distancia1 = distancia_cacto_personagem(cacto1, alagoano)
@@ -217,14 +237,15 @@ def jogo():
            distancia2 =  distancia_cacto_personagem(cacto2, alagoano) 
 
         if primeira_interacao3:
-           distancia3 = distancia_cacto_personagem(cacto3, alagoano)
-        
-        if distancia1 <= 70 and primeira_interacao1:
+           distancia3 = distancia_cacto_personagem(cacto3, alagoano) 
 
-            # fixa a distânica do personagem pro cacto
+        #Analisa a primeira vez que o atirador se aproxima do CACTO 1
+        if distancia1 <= 45 and primeira_interacao1:
+
+            #fixa a distânica do personagem pro cacto
             primeira_interacao1 = False
 
-            # Salva as coordenadas y do cacto e do atirador na primeira vez que eles atingiram a distância mínima pro movimento
+            #Salva as coordenadas y do cacto e do atirador na primeira vez que eles atingiram a distância mínima pro movimento
             y_alagoano = alagoano.rect.y
             y_cacto1 = cacto1.rect.y
 
@@ -237,12 +258,12 @@ def jogo():
                movimento_pra_cima(cacto1)
     
         #Analisa a primeira vez que o personagem se aproxima do CACTO 2
-        if distancia2 <= 100 and primeira_interacao2:
+        if distancia2 <= 75 and primeira_interacao2:
 
-             # fixa a distânica do personagem pro cacto
+            #Impede o progama de executar linhas de código desncessárias
             primeira_interacao2 = False
 
-            # Salva as coordenadas y do cacto e do atirador na primeira vez que eles atingiram a distância mínima pro movimento
+            #Salva as coordenadas y do cacto e do atirador na primeira vez que eles atingiram a distância mínima pro movimento
             y_alagoano = alagoano.rect.y
             y_cacto2 = cacto2.rect.y
 
@@ -255,7 +276,7 @@ def jogo():
                 movimento_pra_baixo(cacto2)
 
         #Analisa a primeira vez que o personagem se aproxima do CACTO 3
-        if distancia3 <= 100 and primeira_interacao3 :
+        if distancia3 <= 90 and primeira_interacao3 :
 
             #Impede o progama de executar linhas de código desnecessárias
             primeira_interacao3 = False
@@ -271,31 +292,40 @@ def jogo():
 
             if cacto3.rect.y < 600:
                 movimento_pra_baixo(cacto3)
+
         
-        # colisões das sprites
+        #colisões das sprites
         colisoes1 = pygame.sprite.spritecollide(alagoano, grupo_cactos, False, pygame.sprite.collide_mask)
+
         if colisoes1:
             gameover()
 
         colisoes2 = pygame.sprite.spritecollide(alagoano, shooter, False, pygame.sprite.collide_mask )
+
         if colisoes2:
             gameover()
 
         colisoes3 = pygame.sprite.spritecollide(alagoano, bullets, False, pygame.sprite.collide_mask)
+
         if colisoes3:
             gameover()
-            
+
         # colisões com as boxes dos cactos
         colisao_box_cactos(alagoano)
-                
+
+        # colisões com os coletáveis
         if pygame.sprite.spritecollide(alagoano, _peixeira, True):
-            texto.up1
+            texto.up1()
+
         elif pygame.sprite.spritecollide(alagoano, _calango, True):
-            texto.up2
+            texto.up2()
+
         elif pygame.sprite.spritecollide(alagoano, _agua, True):
-            texto.up3
-            
-        # desenhado o alagoan
+            texto.up3()
+
+         
+
+        # desenhado o alagoano
         player.draw(win)
 
         # desenhando o atirador
@@ -307,26 +337,23 @@ def jogo():
 
         # movimentação das balas
         bullets.update(width)
-        
-        #escreve a contagem dos coletáveis
+
+        # desenhando os coletaveis
+        _peixeira.draw(win)
+        _agua.draw(win)
+        _calango.draw(win)
+
         win.blit(texto.texto1, texto.escrever1)
         win.blit(texto.texto2, texto.escrever2)
         win.blit(texto.texto3, texto.escrever3)
 
-        pygame.display.flip()
-
-        #checa se o jogador ganhou
+        print(texto.p1, texto.p2, texto.p3)
         if texto.p1 == texto.p2 == texto.p3 == 1:
-            return victory()
+            vitoria.draw(win)
+            time.sleep(5)
+            return False
 
-        
-pygame.init()
-win = pygame.display.set_mode((width, height))
-
-bg_img = pygame.image.load('./sprites/mapa/mapateste2.png')
-bg_img = pygame.transform.scale(bg_img, (width, height))
-
-pygame.display.set_caption("Alagoaninho Adventures")
+        pygame.display.flip()
 
 jogar = True
 while jogar:
