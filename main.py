@@ -60,6 +60,28 @@ def movimento_pra_cima(cacto):
 
 def movimento_pra_baixo(cacto):
     cacto.rect.y += 2
+   
+# colisão do alagoano com as boxes dos cactos
+def colisao_box_cactos(personagem):
+       if 0 <= personagem.rect.y <= 149 and 0 <= personagem.rect.x <= 51:
+            return gameover()
+       elif 0 <= personagem.rect.y <= 42 and 57 <= personagem.rect.x <= 178:
+            return gameover()
+
+       elif 382 <= personagem.rect.y <= 600 and 0 <= personagem.rect.x <= 48:
+            return gameover() 
+
+       elif 477 <= personagem.rect.y <= 600  and 51 <= personagem.rect.x <= 173:
+            return gameover()
+
+       elif 335 <= personagem.rect.y <= 393 and 265 <= personagem.rect.x <= 378:
+            return gameover()
+
+       elif 335 <= personagem.rect.y <= 375 and 593 <= personagem.rect.x <= 819:
+            return gameover()
+    
+       elif 206 <= personagem.rect.y <= 284 and 373 <= personagem.rect.x <= 791:
+            return gameover()
 
 def jogo():
     mixer.init()
@@ -191,6 +213,85 @@ def jogo():
             pulo = alagoano.down()
             if time.time() - tbase > 0.2:
                 alagoano.base()
+                
+        # movimento dos cactos
+        if primeira_interacao1:
+           distancia1 = distancia_cacto_personagem(cacto1, alagoano)
+
+        if primeira_interacao2:
+           distancia2 =  distancia_cacto_personagem(cacto2, alagoano) 
+
+        if primeira_interacao3:
+           distancia3 = distancia_cacto_personagem(cacto3, alagoano)
+        
+        if distancia1 <= 70 and primeira_interacao1:
+
+            # fixa a distânica do personagem pro cacto
+            primeira_interacao1 = False
+
+            # Salva as coordenadas y do cacto e do atirador na primeira vez que eles atingiram a distância mínima pro movimento
+            y_alagoano = alagoano.rect.y
+            y_cacto1 = cacto1.rect.y
+
+            if cacto1.rect.y > -56:
+               movimento_pra_cima(cacto1)
+
+        if not primeira_interacao1:
+
+            if cacto1.rect.y > -56:
+               movimento_pra_cima(cacto1)
+    
+        #Analisa a primeira vez que o personagem se aproxima do CACTO 2
+        if distancia2 <= 100 and primeira_interacao2:
+
+             # fixa a distânica do personagem pro cacto
+            primeira_interacao2 = False
+
+            # Salva as coordenadas y do cacto e do atirador na primeira vez que eles atingiram a distância mínima pro movimento
+            y_alagoano = alagoano.rect.y
+            y_cacto2 = cacto2.rect.y
+
+            if cacto2.rect.y < 600:
+                movimento_pra_baixo(cacto2)
+
+        if not primeira_interacao2:
+
+            if cacto2.rect.y < 600:
+                movimento_pra_baixo(cacto2)
+
+        #Analisa a primeira vez que o personagem se aproxima do CACTO 3
+        if distancia3 <= 100 and primeira_interacao3 :
+
+            #Impede o progama de executar linhas de código desnecessárias
+            primeira_interacao3 = False
+
+            #Salva as coordenadas y do cacto e do atirador na primeira vez que eles atingiram a distância mínima pro movimento
+            y_alagoano = alagoano.rect.y
+            y_cacto3 = cacto3.rect.y
+
+            if cacto3.rect.y < 600:
+                movimento_pra_baixo(cacto3)
+
+        if not primeira_interacao3 :
+
+            if cacto3.rect.y < 600:
+                movimento_pra_baixo(cacto3)
+        
+        # colisões das sprites
+        colisoes1 = pygame.sprite.spritecollide(alagoano, grupo_cactos, False, pygame.sprite.collide_mask)
+        if colisoes1:
+            gameover()
+
+        colisoes2 = pygame.sprite.spritecollide(alagoano, shooter, False, pygame.sprite.collide_mask )
+        if colisoes2:
+            gameover()
+
+        colisoes3 = pygame.sprite.spritecollide(alagoano, bullets, False, pygame.sprite.collide_mask)
+        if colisoes3:
+            gameover()
+            
+        # colisões com as boxes dos cactos
+        colisao_box_cactos(alagoano)
                 
         if pygame.sprite.spritecollide(alagoano, _peixeira, True):
             texto.up1
