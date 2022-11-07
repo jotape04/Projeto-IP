@@ -35,16 +35,19 @@ def victory():
     return False
 
 def gameover():
+    #toca a musica de morte
     mixer.music.load("./music/over.mp3")
     mixer.music.play()
     
+    #coloca na tela a mensagem de morte
     death = Death()
     morte = pygame.sprite.Group()
     morte.add(death)
 
     morte.draw(win)
     pygame.display.update()
-
+    
+    #espera 5 segundos e reinicia o jogo
     time.sleep(5)
     return jogo()
 
@@ -84,6 +87,7 @@ def colisao_box_cactos(personagem):
             return gameover()
 
 def jogo():
+    #comeca a tocar a musica de fundo
     mixer.init()
     musica = mixer.music.load("./music/gameost.mp3")
     mixer.music.set_volume(0.4)
@@ -313,15 +317,14 @@ def jogo():
         # movimentação das balas
         bullets.update(width)
         
+        #escreve a contagem dos coletáveis
         win.blit(texto.texto1, texto.escrever1)
         win.blit(texto.texto2, texto.escrever2)
         win.blit(texto.texto3, texto.escrever3)
 
         pygame.display.flip()
 
-        if keys[pygame.K_DOWN]:
-            gameover()
-
+        #checa se o jogador ganhou
         if texto.p1 == texto.p2 == texto.p3 == 1:
             return victory()
 
