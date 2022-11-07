@@ -8,17 +8,8 @@ from texto import *
 import pygame
 import time
 
-pygame.init()
-
-height = 600
 width = 1200
-
-win = pygame.display.set_mode((width, height))
-
-bg_img = pygame.image.load('./sprites/mapa/mapateste2.png')
-bg_img = pygame.transform.scale(bg_img, (width, height))
-
-pygame.display.set_caption("Alagoaninho Adventures")
+height = 600
 
 def victory():
     mixer.music.load("./music/vic.mp3")
@@ -327,6 +318,15 @@ def jogo():
         #checa se o jogador ganhou
         if texto.p1 == texto.p2 == texto.p3 == 1:
             return victory()
+
+        
+pygame.init()
+win = pygame.display.set_mode((width, height))
+
+bg_img = pygame.image.load('./sprites/mapa/mapateste2.png')
+bg_img = pygame.transform.scale(bg_img, (width, height))
+
+pygame.display.set_caption("Alagoaninho Adventures")
 
 jogar = True
 while jogar:
