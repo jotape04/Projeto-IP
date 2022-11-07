@@ -27,11 +27,11 @@ class Texto():
         self.p3 = 0
 
         # criando a escrita:
-        self.texto1 = self.fonte.render("Pexeira: " + str(0),
+        self.texto1 = self.fonte.render("Peixeira: " + str(0),
                                         True, (0, 0, 0))
         self.texto2 = self.fonte.render("Calango: " + str(0),
                                         True, (0, 0, 0))
-        self.texto3 = self.fonte.render("Agua: " + str(0),
+        self.texto3 = self.fonte.render("Água: " + str(0),
                                         True, (0, 0, 0))
 
         # criando a superficie:
