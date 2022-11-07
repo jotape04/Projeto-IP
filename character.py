@@ -1,6 +1,5 @@
 import pygame
 
-
 VEL = 5
 ATT = 7
 
@@ -17,7 +16,6 @@ class Alagoano(pygame.sprite.Sprite):
         self.jumpi = 0
         self.lock = 0
 
-
     def base(self):
         if self.direction == 0:
             self.image = pygame.image.load(
@@ -28,9 +26,9 @@ class Alagoano(pygame.sprite.Sprite):
 
     def right(self):
         self.direction = 0
-        if 250 < self.rect.x < 300  and 203 < self.rect.y < 365:
+        if 250 < self.rect.x < 300 and 203 < self.rect.y < 365:
             pass
-        elif 843 < self.rect.x < 867  and 203 < self.rect.y < 365:
+        elif 843 < self.rect.x < 867 and 203 < self.rect.y < 365:
             pass
         elif (self.rect.x < 1120):
             self.rect.x += VEL
@@ -49,9 +47,9 @@ class Alagoano(pygame.sprite.Sprite):
     def left(self):
         self.direction = 1
         self.direction = 1
-        if 270 < self.rect.x < 310  and 203 < self.rect.y < 365:
+        if 270 < self.rect.x < 310 and 203 < self.rect.y < 365:
             pass
-        elif 873 < self.rect.x < 897  and 203 < self.rect.y < 365:
+        elif 873 < self.rect.x < 897 and 203 < self.rect.y < 365:
             pass
         elif (self.rect.x > 20):
             self.rect.x -= VEL

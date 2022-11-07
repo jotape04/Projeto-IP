@@ -1,12 +1,13 @@
-from random import randint
+import time
+
+import pygame
+from pygame import mixer
+
+from cactos import *
+from character import Alagoano
+from coletaveis import *
 from shooter import Shooter
 from texto import *
-import pygame
-import time
-from character import Alagoano
-from pygame import mixer
-from coletaveis import *
-from cactos import *
 
 pygame.init()
 
@@ -20,30 +21,31 @@ bg_img = pygame.transform.scale(bg_img, (width, height))
 
 pygame.display.set_caption("Alagoaninho Adventures")
 
+
 def colisao_box_cactos(personagem):
-        if 0 <= personagem.rect.y <= 149 and 0 <= personagem.rect.x <= 51:
-            return True
-            
-        elif 0 <= personagem.rect.y <= 42 and 57 <= personagem.rect.x <= 178:
-            return True
-            
-        elif 382 <= personagem.rect.y <= 600 and 0 <= personagem.rect.x <= 48:
-            return True   
+    if 0 <= personagem.rect.y <= 149 and 0 <= personagem.rect.x <= 51:
+        return True
 
-        elif 477 <= personagem.rect.y <= 600  and 51 <= personagem.rect.x <= 173:
-            return True
-        
+    elif 0 <= personagem.rect.y <= 42 and 57 <= personagem.rect.x <= 178:
+        return True
 
-        elif 335 <= personagem.rect.y <= 393 and 265 <= personagem.rect.x <= 378:
-            return True
-        
-        elif 335 <= personagem.rect.y <= 375 and 593 <= personagem.rect.x <= 819:
-            return True
-            
-        elif 206 <= personagem.rect.y <= 284 and 373 <= personagem.rect.x <= 791:
-            return True
-        else:
-            False
+    elif 382 <= personagem.rect.y <= 600 and 0 <= personagem.rect.x <= 48:
+        return True
+
+    elif 477 <= personagem.rect.y <= 600 and 51 <= personagem.rect.x <= 173:
+        return True
+
+    elif 335 <= personagem.rect.y <= 393 and 265 <= personagem.rect.x <= 378:
+        return True
+
+    elif 335 <= personagem.rect.y <= 375 and 593 <= personagem.rect.x <= 819:
+        return True
+
+    elif 206 <= personagem.rect.y <= 284 and 373 <= personagem.rect.x <= 791:
+        return True
+    else:
+        False
+
 
 def victory():
     mixer.music.load("./music/vic.mp3")
@@ -59,6 +61,7 @@ def victory():
     time.sleep(5)
     return False
 
+
 def gameover():
 
     mixer.music.load("./music/over.mp3")
@@ -73,6 +76,7 @@ def gameover():
 
     time.sleep(5)
     return jogo()
+
 
 def jogo():
     mixer.init()
@@ -100,7 +104,7 @@ def jogo():
 
     # coloca os coletaveis
     agua = Agua()
-    _agua =  pygame.sprite.Group()
+    _agua = pygame.sprite.Group()
     _agua.add(agua)
 
     calango = Calango()
@@ -111,17 +115,18 @@ def jogo():
     _peixeira = pygame.sprite.Group()
     _peixeira.add(peixeira)
 
-    #coloca os cactos em campo
-    cacto1 = Cacto((27, 50.4), 194, 565 )
+    # coloca os cactos em campo
+    cacto1 = Cacto((27, 50.4), 194, 565)
     cacto2 = Cacto_invertido(586, 372)
     cacto3 = Cacto_invertido(843, 372)
     cacto4 = Cacto_invertido(880, 378)
     cacto5 = Cacto_invertido(546, 378)
-    minicacto1 = Cacto((27*0.2, 50.4*0.2),79, 340)
-    minicacto2 = Cacto((27*0.2, 50.4*0.2),739,173) 
-    minicacto3 = Cacto((27*0.2, 50.4*0.2),730,173)
+    minicacto1 = Cacto((27*0.2, 50.4*0.2), 79, 340)
+    minicacto2 = Cacto((27*0.2, 50.4*0.2), 739, 173)
+    minicacto3 = Cacto((27*0.2, 50.4*0.2), 730, 173)
     grupo_cactos = pygame.sprite.Group()
-    grupo_cactos.add(cacto1, cacto2, cacto3, cacto4, cacto5, minicacto1, minicacto2, minicacto3)
+    grupo_cactos.add(cacto1, cacto2, cacto3, cacto4, cacto5,
+                     minicacto1, minicacto2, minicacto3)
 
     #
     c1 = 0
@@ -131,7 +136,7 @@ def jogo():
     # coloca as balas
     bullets = pygame.sprite.Group()
 
-    #se houve colisão com cacto
+    # se houve colisão com cacto
     colc = False
 
     # começa o timer para as balas
@@ -191,7 +196,7 @@ def jogo():
         if pulo == 1:
             alagoano.updatejump()
 
-            if time.time() - tpulo > 0.37:
+            if time.time() - tpulo > 0.35:
                 pulo = alagoano.down()
                 alagoano.base()
             else:
@@ -200,7 +205,7 @@ def jogo():
             pulo = alagoano.down()
             if time.time() - tbase > 0.2:
                 alagoano.base()
-        
+
         if pygame.sprite.spritecollide(alagoano, _peixeira, True):
             texto.up1()
 
@@ -236,20 +241,20 @@ def jogo():
         pygame.display.update()
         if 205 <= alagoano.rect.x <= 230:
             c1 = 1
-        
+
         if 820 <= alagoano.rect.x <= 857:
             c3 = 1
 
         if 558 <= alagoano.rect.x <= 602:
             c2 = 1
-        
+
         if c1 == 1:
             cacto1.move()
         if c3 == 1:
             cacto3.move()
         if c2 == 1:
             cacto2.move()
-        
+
         if pygame.sprite.spritecollide(alagoano, grupo_cactos, True):
             return gameover()
 
@@ -262,7 +267,7 @@ def jogo():
         colc = colisao_box_cactos(alagoano)
         if colc:
             return gameover()
-        
+
         if texto.p1 == texto.p2 == texto.p3 == 1:
             return victory()
 
