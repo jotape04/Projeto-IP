@@ -74,7 +74,7 @@ class Alagoano(pygame.sprite.Sprite):
             self.jumpi = 0
             self.lock = 0
             return 0
-        elif 610 > self.rect.x > 480 and 430 < self.rect.y < 440:
+        elif 610 > self.rect.x > 485 and 430 < self.rect.y < 440:
             self.jumpi = 0
             self.lock = 0
             return 0
@@ -86,7 +86,7 @@ class Alagoano(pygame.sprite.Sprite):
             self.jumpi = 0
             self.lock = 0
             return 0
-        elif 95 > self.rect.x > 25 and 293 < self.rect.y < 300:
+        elif 95 > self.rect.x > 30 and 293 < self.rect.y < 300:
             self.jumpi = 0
             self.lock = 0
             return 0

@@ -123,10 +123,9 @@ def jogo():
     cacto5 = Cacto_invertido(546, 378)
     minicacto1 = Cacto((27*0.2, 50.4*0.2), 79, 340)
     minicacto2 = Cacto((27*0.2, 50.4*0.2), 739, 173)
-    minicacto3 = Cacto((27*0.2, 50.4*0.2), 730, 173)
     grupo_cactos = pygame.sprite.Group()
     grupo_cactos.add(cacto1, cacto2, cacto3, cacto4, cacto5,
-                     minicacto1, minicacto2, minicacto3)
+                     minicacto1, minicacto2)
 
     #
     c1 = 0
