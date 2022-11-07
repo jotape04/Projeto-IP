@@ -126,7 +126,7 @@ class Alagoano(pygame.sprite.Sprite):
         if (570 > self.rect.x > 380 and 360 > self.rect.y > 300) or (895 > self.rect.x > 810 and 360 > self.rect.y > 300):
             pass
         elif self.rect.y > -5:
-            self.rect.y -= VEL * 1.38
+            self.rect.y -= VEL * 1.50
 
         if self.direction == 0:
             self.image = pygame.image.load(
