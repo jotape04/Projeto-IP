@@ -76,7 +76,7 @@ def gameover():
 
 def jogo():
     mixer.init()
-    musica = mixer.music.load("./music/gameost.mp3")
+    mixer.music.load("./music/gameost.mp3")
     mixer.music.set_volume(0.4)
     mixer.music.play(-1)
 
@@ -117,10 +117,11 @@ def jogo():
     cacto3 = Cacto_invertido(843, 372)
     cacto4 = Cacto_invertido(880, 378)
     cacto5 = Cacto_invertido(546, 378)
-    minicacto1 = Cacto((27*0.2, 50.4*0.2),79, 335)
-    minicacto2 = Cacto((27*0.2, 50.4*0.2),739,173)  
+    minicacto1 = Cacto((27*0.2, 50.4*0.2),79, 340)
+    minicacto2 = Cacto((27*0.2, 50.4*0.2),739,173) 
+    minicacto3 = Cacto((27*0.2, 50.4*0.2),730,173)
     grupo_cactos = pygame.sprite.Group()
-    grupo_cactos.add(cacto1, cacto2, cacto3, cacto4, cacto5, minicacto1, minicacto2)
+    grupo_cactos.add(cacto1, cacto2, cacto3, cacto4, cacto5, minicacto1, minicacto2, minicacto3)
 
     #
     c1 = 0
@@ -153,7 +154,7 @@ def jogo():
 
                 # saindo do loop
                 return False
-        
+
         keys = pygame.key.get_pressed()
 
         # atirador voltando a posição base
