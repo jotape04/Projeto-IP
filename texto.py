@@ -45,7 +45,7 @@ class Texto():
 
     def up1(self):
         self.p1 += 1
-        self.texto1 = self.fonte.render("Pexeira: " + str(self.p1),
+        self.texto1 = self.fonte.render("Peixeira: " + str(self.p1),
                                         True, (0, 0, 0))
 
     def up2(self):
@@ -55,5 +55,5 @@ class Texto():
 
     def up3(self):
         self.p3 += 1
-        self.texto3 = self.fonte.render("Agua: " + str(self.p3),
+        self.texto3 = self.fonte.render("Água: " + str(self.p3),
                                         True, (0, 0, 0))
