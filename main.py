@@ -153,9 +153,7 @@ def jogo():
 
                 # saindo do loop
                 return False
-            if event.type == pygame.MOUSEBUTTONUP:
-                print(pygame.mouse.get_pos())
-
+        
         keys = pygame.key.get_pressed()
 
         # atirador voltando a posição base
@@ -263,9 +261,6 @@ def jogo():
         colc = colisao_box_cactos(alagoano)
         if colc:
             return gameover()
-
-        if keys[pygame.K_DOWN]:
-            return jogo()
         
         if texto.p1 == texto.p2 == texto.p3 == 1:
             return victory()
