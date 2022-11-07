@@ -1,12 +1,12 @@
+from cactos import Cacto, Cacto_invertido
+from character import Alagoano
+from pygame import mixer
+from coletaveis import *
 from random import randint
 from shooter import Shooter
 from texto import *
 import pygame
 import time
-from character import Alagoano
-from pygame import mixer
-from coletaveis import *
-from cactos import Cacto, Cacto_invertido
 
 pygame.init()
 
