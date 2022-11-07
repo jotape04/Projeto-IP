@@ -58,7 +58,7 @@ def victory():
     vitoria.draw(win)
     pygame.display.update()
 
-    time.sleep(5)
+    time.sleep(3)
     return False
 
 
@@ -74,7 +74,7 @@ def gameover():
     morte.draw(win)
     pygame.display.update()
 
-    time.sleep(5)
+    time.sleep(2)
     return jogo()
 
 
